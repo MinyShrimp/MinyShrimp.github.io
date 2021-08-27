@@ -22,7 +22,12 @@ $(document).ready( () => {
 
     let accumulate = {
         'suho': 0, 'wemeng': 0, 'oreha': 0, 'mengpa': 0, 'gold': 0,
-        'sun1': 0, 'sun2': 0, 'sun3': 0
+        'sun1': 0, 'sun2': 0, 'sun3': 0, 'count': 0
+    };
+
+    let now_accumulate = {
+        'suho': 0, 'wemeng': 0, 'oreha': 0, 'mengpa': 0, 'gold': 0,
+        'sun1': 0, 'sun2': 0, 'sun3': 0, 'count': 0
     };
 
     const EQUIP_URL  = "https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_104.png";
@@ -43,6 +48,14 @@ $(document).ready( () => {
         $('#oreha_value').text(   comma( _data[index]['oreha']  ) );
         $('#mengpa_value').text(  comma( _data[index]['mengpa'] ) );
         $('#gold_value').text(    comma( _data[index]['gold']   ) );
+
+        $("#sun1_value").text( '0' );
+        $("#sun2_value").text( '0' );
+        $("#sun3_value").text( '0' );
+
+        $("#sun1").val( '0' );
+        $("#sun2").val( '0' );
+        $("#sun3").val( '0' );
     
         $("#sun1").attr( "max", _data[index]['sun1'] );
         $("#sun2").attr( "max", _data[index]['sun2'] );
@@ -64,7 +77,17 @@ $(document).ready( () => {
         $("#init_btn").attr(    'disabled', false );
     };
 
-    let add_accumulate = () => {
+    let really_init = () => {
+        init();
+
+        accumulate = {
+            'suho': 0, 'wemeng': 0, 'oreha': 0, 'mengpa': 0, 'gold': 0,
+            'sun1': 0, 'sun2': 0, 'sun3': 0
+        };
+        set_all_accumulate_html();
+    };
+
+    let add_all_accumulate = () => {
         let _this = $('#refining_type');
         let _data = _this.val() === '0' ? weapon : equip;
         let index = Number($('#index_type').val());
@@ -77,11 +100,12 @@ $(document).ready( () => {
         accumulate['sun1']   += Number( $("#sun1_value").text() ) ;
         accumulate['sun2']   += Number( $("#sun2_value").text() ) ;
         accumulate['sun3']   += Number( $("#sun3_value").text() ) ;
+        accumulate['count']  += 1;
 
-        set_accumulate_html();
+        set_all_accumulate_html();
     }
 
-    let set_accumulate_html = () => {
+    let set_all_accumulate_html = () => {
         $('#nu_crystal_value').text( comma( accumulate['suho']  ) );
         $('#nu_wemeng_value').text(  comma( accumulate['wemeng']) );
         $('#nu_oreha_value').text(   comma( accumulate['oreha'] ) );
@@ -131,7 +155,7 @@ $(document).ready( () => {
     });
 
     $("#enforce_btn").on('click', () => {
-        add_accumulate();
+        add_all_accumulate();
         set_success_rate();
         let _rate = Number($('#success').text());
         let index = Number($('#index_type').val());
@@ -159,5 +183,5 @@ $(document).ready( () => {
             set_success_rate();
         }
     });
-    $('#init_btn').on( "click", init );
+    $('#init_btn').on( "click", really_init );
 });

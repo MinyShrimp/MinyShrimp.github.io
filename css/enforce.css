@@ -67,8 +67,9 @@ table {
     text-align: left;
 }
 
-table>td {
+table>tr>td {
     text-align: right;
+    
 }
 
 button {
