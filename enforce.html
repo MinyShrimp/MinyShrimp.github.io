@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./js/enforce.js"></script>
+
+    <style>
+        img {
+            width: 50px;
+            height: 50px;
+            display: inline-block;
+        }
+
+        .vertical-center {
+            display: inline-block;
+            vertical-align: middle;
+            height: 100%;
+            width:  160px;
+        }
+
+        .left {
+            width: 250px;
+            text-align: center;
+        }
+
+        .right {
+            display: inline-block;
+            width: 75%;
+        }
+
+        .right>table {
+            width: 100%;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .contents {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .header {
+            width: 100%;
+            border-bottom: 1px solid black;
+            margin-bottom: 1em;
+        }
+
+        .weapon {
+            width: 100px !important;
+            height: 100px !important;
+            background: linear-gradient(135deg, #341a09, #a24006);
+        }
+
+        .td1 {
+            width: 6%;
+        }
+
+        .td2 {
+            width: 17%;
+            text-align: right;
+            margin-right: 1em;
+            padding-right: 1em;
+        }
+
+        input[type=range] {
+            width: 100%;
+        }
+
+        table {
+            margin: 0 auto;
+            vertical-align: middle;
+            text-align: left;
+        }
+
+        table>td {
+            text-align: right;
+        }
+
+        button {
+            width: 100%;
+            height: 3em;
+        }
+
+        p {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body ondragstart="return false;" onselectstart="return false">
+    <div class='contents'>
+        <div class='header'>
+            <h1> 장비를 재련해봐요 </h1>
+        </div>
+
+        <div style="text-align: center; width: 100%; margin: 0 auto; border-bottom: 1px solid black;">
+            <table style='width: 100%;'>
+                <td class='left'>
+                    <div class='vertical-center'>
+                        <div class='item' style="display: block !important;">
+                            <img id='weapon_img' class='weapon'
+                                src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/MEM_Item/MEM_Item_132.png' alt>
+                            <div>
+                                <select id='refining_type'>
+                                    <option value="0" selected> 무기 </option>
+                                    <option value="1"> 방어구 </option>
+                                </select>
+                                <select id='index_type'>
+                                    <option value="7" selected> 7강 </option>
+                                    <option value="8"> 8강 </option>
+                                    <option value="9"> 9강 </option>
+                                    <option value="10"> 10강 </option>
+                                    <option value="11"> 11강 </option>
+                                    <option value="12"> 12강 </option>
+                                    <option value="13"> 13강 </option>
+                                    <option value="14"> 14강 </option>
+                                    <option value="15"> 15강 </option>
+                                    <option value="16"> 16강 </option>
+                                    <option value="17"> 17강 </option>
+                                    <option value="18"> 18강 </option>
+                                    <option value="19"> 19강 </option>
+                                    <option value="20"> 20강 </option>
+                                    <option value="21"> 21강 </option>
+                                    <option value="22"> 22강 </option>
+                                    <option value="23"> 23강 </option>
+                                    <option value="24"> 24강 </option>
+                                    <option value="25"> 25강 </option>
+                                </select>
+                            </div>
+                            <p> <b>
+                                <span style="color: goldenrod;">
+                                    <span id='now_lv'>6</span> 단계 >>>
+                                </span>
+                                <span style="color: green;">
+                                    <span id='next_lv'>7</span> 단계
+                                </span>
+                            </b> </p>
+                        </div>
+    
+                        <div style="padding-top: 1em; padding-bottom: 1em; display: inline-block; width: 100%;">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="text-align: left;"> 성공률 </td>
+                                    <td style="text-align: right;"> <span id='success'>0.00</span> % </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;"> 장기백 </td>
+                                    <td style="text-align: right;"> <span id='jangiback'>0.00</span> % </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;"> 시도횟수 </td>
+                                    <td style="text-align: right;"> <span id='count'>0</span> 회 </td>
+                                </tr>
+                            </table>
+                        </div>
+    
+                        <div>
+                            <button id='enforce_btn'>장비 재련</button><br><br>
+                            <button id='init_btn'>초기화</button>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <table>
+                        <tr>
+                            <th style='text-align: left; border-bottom: 1px solid black; width: 50%' colspan="4"> 필요 재화 </th>
+                            <th style='text-align: left; border-bottom: 1px solid black; width: 50%' colspan="4"> 추가 재화 </th>
+                        </tr>
+    
+                        <tr>
+                            <td class='td1'> <img class='crystal'
+                                    src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_105.png' alt> </td>
+                            <td class='td2' style='text-align: right; ' id='crystal_value'> 0 </td>
+    
+                            <td class='td1'> <img
+                                    src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_147.png' alt> </td>
+                            <td class='td2' id='mengpa_value'> 0 </td>
+    
+                            <td class='td1'> <img
+                                    src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_161.png' alt> </td>
+                            <td class='td2'>
+                                <p id="sun1_value" style='text-align: right; margin-bottom: 0;'> 0 </p>
+                                <input type="range" id="sun1" name="sun1" min="0" max="12" value='0'>
+                            </td>
+                        </tr>
+    
+                        <tr>
+                            <td> <img src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_156.png' alt> </td>
+                            <td class='td2' id='wemeng_value'> 0 </td>
+    
+                            <td> <img src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_182.png' alt> </td>
+                            <td class='td2' id='gold_value'> 0 </td>
+    
+                            <td> <img src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_162.png' alt> </td>
+                            <td class='td2'>
+                                <p id="sun2_value" style='text-align: right; margin-bottom: 0;'> 0 </p>
+                                <input type="range" id="sun2" name="sun2" min="0" max="6" value='0'>
+                            </td>
+                        </tr>
+    
+                        <tr>
+                            <td> <img src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_9_71.png' alt> </td>
+                            <td class='td2' id='oreha_value'> 0 </td>
+                            <td colspan="2"></td>
+    
+                            <td> <img src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_163.png' alt> </td>
+                            <td class='td2'>
+                                <p id="sun3_value" style='text-align: right; margin-bottom: 0;'> 0 </p>
+                                <input type="range" id="sun3" name="sun3" min="0" max="6" value='0'>
+                            </td>
+                        </tr>
+                    </table> <br>
+    
+                    <table>
+                        <tr>
+                            <th style='text-align: left; border-bottom: 1px solid black; width: 50%;' colspan="4"> 소모 재화 (현재 강화) </th>
+                            <th style='text-align: left; border-bottom: 1px solid black; width: 50%;' colspan="4"> </th>
+                        </tr>
+    
+                        <tr>
+                            <td class='td1'> <img class='crystal'
+                                    src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_105.png' alt> </td>
+                            <td class='td2' id='now_crystal_value'> 0 </td>
+    
+                            <td class='td1'> <img
+                                    src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_147.png' alt> </td>
+                            <td class='td2' id='now_mengpa_value'> 0 </td>
+    
+                            <td class='td1'> <img
+                                    src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_161.png' alt> </td>
+                            <td class='td2'>
+                                <p id="now_sun1_value" style='text-align: right; margin-bottom: 0;'> 0 </p>
+                            </td>
+                        </tr>
+    
+                        <tr>
+                            <td class='td1'> <img src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_156.png' alt> </td>
+                            <td class='td2' id='now_wemeng_value'> 0 </td>
+    
+                            <td class='td1'> <img src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_182.png' alt> </td>
+                            <td class='td2' id='now_gold_value'> 0 </td>
+    
+                            <td class='td1'> <img src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_162.png' alt> </td>
+                            <td class='td2'>
+                                <p id="now_sun2_value" style='text-align: right; margin-bottom: 0;'> 0 </p>
+                            </td>
+                        </tr>
+    
+                        <tr>
+                            <td> <img src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_9_71.png' alt> </td>
+                            <td class='td2' id='now_oreha_value'> 0 </td>
+                            <td colspan="2"> </td>
+    
+                            <td> <img src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_163.png' alt> </td>
+                            <td class='td2'>
+                                <p id="now_sun3_value" style='text-align: right; margin-bottom: 0;'> 0 </p>
+                            </td>
+                        </tr>
+                    </table> <br>
+    
+                    <table>
+                        <tr>
+                            <th style='text-align: left; border-bottom: 1px solid black; width: 50%;' colspan="4"> 소모 재화 (전체) </th>
+                            <th style='text-align: left; border-bottom: 1px solid black; width: 50%;' colspan="4"> </th>
+                        </tr>
+    
+                        <tr>
+                            <td class='td1'> <img class='crystal'
+                                    src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_105.png' alt> </td>
+                            <td class='td2' id='nu_crystal_value'> 0 </td>
+    
+                            <td class='td1'> <img
+                                    src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_147.png' alt> </td>
+                            <td class='td2' id='nu_mengpa_value'> 0 </td>
+    
+                            <td class='td1'> <img
+                                    src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_161.png' alt> </td>
+                            <td class='td2'>
+                                <p id="nu_sun1_value" style='text-align: right; margin-bottom: 0;'> 0 </p>
+                            </td>
+                        </tr>
+    
+                        <tr>
+                            <td class='td1'> <img src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_156.png' alt> </td>
+                            <td class='td2' id='nu_wemeng_value'> 0 </td>
+    
+                            <td class='td1'> <img src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_182.png' alt> </td>
+                            <td class='td2' id='nu_gold_value'> 0 </td>
+    
+                            <td class='td1'> <img src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_162.png' alt> </td>
+                            <td class='td2'>
+                                <p id="nu_sun2_value" style='text-align: right; margin-bottom: 0;'> 0 </p>
+                            </td>
+                        </tr>
+    
+                        <tr>
+                            <td> <img src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_9_71.png' alt> </td>
+                            <td class='td2' id='nu_oreha_value'> 0 </td>
+                            <td colspan="2"> </td>
+    
+                            <td> <img src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_163.png' alt> </td>
+                            <td class='td2'>
+                                <p id="nu_sun3_value" style='text-align: right; margin-bottom: 0;'> 0 </p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </table>
+        </div>
+    </div>
+</body>
