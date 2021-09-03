@@ -38,6 +38,9 @@ $(document).ready( () => {
         'sun1': 0, 'sun2': 0, 'sun3': 0, 'count': 0
     };
 
+    const EQUIP_URL_  = "https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/MEM_Item/MEM_Item_8.png";
+    const WEAPON_URL_ = "https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/MEM_Item/MEM_Item_132.png";
+
     const EQUIP_URL  = "https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_104.png";
     const WEAPON_URL = "https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_6_105.png";
 
@@ -54,6 +57,7 @@ $(document).ready( () => {
         } else { yagum_value = 10; }
 
         $('.crystal').attr( 'src', _this.val() === '0' ? WEAPON_URL : EQUIP_URL );
+        $('#weapon_img').attr( 'src', _this.val() === '0' ? WEAPON_URL_ : EQUIP_URL_ );
         $('#now_lv' ).text( index - 1 );
         $('#next_lv').text( index );
     
