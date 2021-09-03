@@ -20,6 +20,11 @@ img {
     text-align: center;
 }
 
+.modal-content > .left {
+    display: inline-block;
+    width: 100%;
+}
+
 .right {
     display: inline-block;
     width: 75%;
@@ -117,4 +122,17 @@ p {
 
 #success-lv {
     color: green;
+}
+
+@media ( max-width: 768px ) {
+    .left {
+        width: 250px;
+        text-align: center;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .rright {
+        display: block;
+    }
 }
