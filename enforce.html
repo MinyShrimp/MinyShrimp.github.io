@@ -139,7 +139,7 @@
                         </tr>
                     </table> <br>
     
-                     <br>
+                    <br>
     
                     <table>
                         <tr>
@@ -204,9 +204,13 @@
 
     <div id="myModal" class="modal" style="display: none;">
         <div class="modal-content">
+            <div class='modal-header'>
+                <h1> <span id='success-lv'>+7</span> 강화 성공! </h1>
+            </div>
+
             <table>
                 <tr>
-                    <th style='text-align: left; border-bottom: 1px solid black; width: 50%;' colspan="4"> 소모 재화 ( +<span> 0 </span> ) </th>
+                    <th style='text-align: left; border-bottom: 1px solid black; width: 50%;' colspan="4"> 소모 재화 </th>
                     <th style='text-align: left; border-bottom: 1px solid black; width: 50%;' colspan="4"> </th>
                 </tr>
 
@@ -248,8 +252,6 @@
                         <p id="now_yagum_value" style='text-align: right; margin-bottom: 0;'> 0 </p>
                     </td>
                     
-                    
-
                     <td class='td1'> <img src='https://cdn-lostark.game.onstove.com/EFUI_IconAtlas/Use/Use_7_163.png' alt> </td>
                     <td class='td2'>
                         <p id="now_sun3_value" style='text-align: right; margin-bottom: 0;'> 0 </p>
@@ -259,10 +261,10 @@
                 <tr>
                     <td colspan="2"></td>
                     <td class='td1'> 장기백 </td>
-                    <td class='td2'> 0.00 % </td>
+                    <td class='td2' id='now_jangi_value'> 0.00 % </td>
 
                     <td class='td1'> 시도 횟수 </td>
-                    <td class='td2'> 0 </td>
+                    <td class='td2' id='now_count_value'> 0 </td>
                 </tr>
             </table>
         </div>

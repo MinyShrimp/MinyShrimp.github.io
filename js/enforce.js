@@ -103,12 +103,16 @@ $(document).ready( () => {
             'suho': 0, 'wemeng': 0, 'oreha': 0, 'mengpa': 0, 'gold': 0,
             'sun1': 0, 'sun2': 0, 'sun3': 0
         }; set_all_accumulate_html();
+    };
+
+    let now_init = () => {
+        now_yagum = 0; now_yagum = 0;
 
         now_accumulate = {
             'suho': 0, 'wemeng': 0, 'oreha': 0, 'mengpa': 0, 'gold': 0,
             'sun1': 0, 'sun2': 0, 'sun3': 0
         }; set_now_accumulate_html();
-    };
+    }
 
     let add_all_accumulate = () => {
         let _this = $('#refining_type');
@@ -158,6 +162,12 @@ $(document).ready( () => {
     }
 
     let set_now_accumulate_html = () => {
+        let next_index = Number($('#index_type').val());
+
+        $('#success-lv'       ).text( '+' + next_index );
+        $('#now_count_value'  ).text( count );
+        $('#now_jangi_value'  ).text( jangiback.toFixed(2) + ' %' );
+        $('#now_yagum_value'  ).text( now_yagum );
         $('#now_crystal_value').text( comma( now_accumulate['suho']   ) );
         $('#now_wemeng_value' ).text( comma( now_accumulate['wemeng'] ) );
         $('#now_oreha_value'  ).text( comma( now_accumulate['oreha']  ) );
@@ -220,9 +230,12 @@ $(document).ready( () => {
         nu_yagum += $('#yagum_value').is(':checked') ? 1 : 0;
         $('#nu_yagum_value').text( nu_yagum );
 
+        now_yagum += $('#yagum_value').is(':checked') ? 1 : 0;
+
         if( isTrue( _rate ) || jangiback >= 100 ) {
             console.log('success');
 
+            set_now_accumulate_html();
             $('#myModal').css('display', 'block');
         } else {
             console.log('fail');
@@ -257,6 +270,8 @@ $(document).ready( () => {
                 $("#enforce_btn").attr( 'disabled', true );
                 $("#init_btn").attr(    'disabled', true );
             }
+
+            now_init();
         }
     });
 

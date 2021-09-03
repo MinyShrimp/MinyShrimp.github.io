@@ -1,3 +1,7 @@
+body {
+    background-color: #212529;
+}
+
 img {
     width: 50px;
     height: 50px;
@@ -32,6 +36,8 @@ img {
 .contents {
     width: 90%;
     margin: 0 auto;
+    padding: 1em;
+    background-color: #F5F5F5;
 }
 
 .header {
@@ -103,4 +109,12 @@ p {
     border: 1px solid #888;
     width: 60%; /* Could be more or less, depending on screen size */
     text-align: center;
+}
+
+.modal-header {
+    text-align: center;
+}
+
+#success-lv {
+    color: green;
 }
