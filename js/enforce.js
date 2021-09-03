@@ -187,6 +187,8 @@ $(document).ready( () => {
         let _data = _this.val() === 0 ? weapon : equip;
         let index = Number($('#index_type').val());
 
+        yagum = $('#yagum_value').is(':checked') ? yagum_value : 0;
+
         let success_rate = 
             _data[index]['success'] + 
             fail_up * fail_count;
@@ -196,9 +198,9 @@ $(document).ready( () => {
         }
 
         success_rate += 
-            _data[index]['sun1_count'] * $("#sun1").val() +
-            _data[index]['sun2_count'] * $("#sun2").val() +
-            _data[index]['sun3_count'] * $("#sun3").val() +
+            _data[index]['sun1_count'] * ($("#sun1_value").text() * 1) +
+            _data[index]['sun2_count'] * ($("#sun2_value").text() * 1) +
+            _data[index]['sun3_count'] * ($("#sun3_value").text() * 1) +
             yagum;
 
         $('#success').text( success_rate.toFixed(2) );
@@ -215,15 +217,39 @@ $(document).ready( () => {
     $('#refining_type').on("change", init);
     $('#index_type').on(   "change", init);
 
-    $("#sun1").on("input", () => {
+    let is_true = () => {
+        let _this = $('#refining_type');
+        let _data = _this.val() === 0 ? weapon : equip;
+        let index = Number($('#index_type').val());
+
+        let _value = 
+            _data[index]['success'] + 
+            fail_up * fail_count;
+        
+        if( _value >= _data[index]['success'] * 2 ) {
+            _value = _data[index]['success'] * 2;
+        }
+
+        _value += 
+            _data[index]['sun1_count'] * $("#sun1").val() +
+            _data[index]['sun2_count'] * $("#sun2").val() +
+            _data[index]['sun3_count'] * $("#sun3").val();
+        
+        return _value + yagum > 100 || ( index >= 24 ? _value > 1.5 : _value > _data[index]['success'] * 2 );
+    }
+
+    $("#sun1").on("input", ( e ) => {
+        if( is_true() ) { e.preventDefault(); return; }
         $("#sun1_value").text( $("#sun1").val() )
         set_success_rate();
     });
-    $("#sun2").on("input", () => {
+    $("#sun2").on("input", ( e ) => {
+        if( is_true() ) { e.preventDefault(); return; }
         $("#sun2_value").text( $("#sun2").val() )
         set_success_rate();
     });
-    $("#sun3").on("input", () => {
+    $("#sun3").on("input", ( e ) => {
+        if( is_true() ) { e.preventDefault(); return; }
         $("#sun3_value").text( $("#sun3").val() )
         set_success_rate();
     });
@@ -255,6 +281,14 @@ $(document).ready( () => {
             fail_count += 1;
             $('#jangiback').text( jangiback.toFixed(2) );
             $('#count').text( count );
+
+            $("#sun1").val( 0 );
+            $("#sun2").val( 0 );
+            $("#sun3").val( 0 );
+
+            $("#sun1_value").text( 0 );
+            $("#sun2_value").text( 0 );
+            $("#sun3_value").text( 0 );
 
             set_success_rate();
         }
