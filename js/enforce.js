@@ -187,14 +187,19 @@ $(document).ready( () => {
         let _data = _this.val() === 0 ? weapon : equip;
         let index = Number($('#index_type').val());
 
-        $('#success').text(  
-            ( _data[index]['success'] + 
+        let success_rate = 
+            _data[index]['success'] + 
             _data[index]['sun1_count'] * $("#sun1").val() +
             _data[index]['sun2_count'] * $("#sun2").val() +
             _data[index]['sun3_count'] * $("#sun3").val() +
             yagum +
-            fail_up * fail_count ).toFixed(2)
-        );
+            fail_up * fail_count;
+        
+        if( success_rate >= _data[index]['success'] * 2 ) {
+            success_rate = _data[index]['success'] * 2;
+        }
+
+        $('#success').text( success_rate.toFixed(2) );
     }
 
     $.getJSON( "./data/equip.json", _equip => {
